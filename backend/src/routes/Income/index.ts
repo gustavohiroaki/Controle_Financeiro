@@ -6,10 +6,14 @@ import { Income } from '../../entities/Income';
 
 const routes = Router();
 
-routes.get('/', (req: Request, res: Response) => {
-    return res.json({
-        test: true,
-    });
+routes.get('/', async (req: Request, res: Response) => {
+    const incomeRepository = getConnectionManager()
+        .get(process.env.NODE_ENV)
+        .getRepository(Income);
+
+    const incomeTransactions = await incomeRepository.find();
+
+    return res.json(incomeTransactions);
 });
 
 routes.post('/', async (req: Request, res: Response) => {

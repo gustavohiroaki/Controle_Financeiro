@@ -38,12 +38,6 @@ describe('Income Routes Testing', () => {
         migrations = await connection.runMigrations(); // Run migrations and return list of all migrations
     });
 
-    it('should return status 200 from new income', async () => {
-        const response = await request(app).get('/income');
-
-        expect(response.status).toBe(200);
-    });
-
     it('should create a new income transaction and return the transaction data', async () => {
         const response = await request(app)
             .post('/income')
@@ -57,7 +51,12 @@ describe('Income Routes Testing', () => {
 
         const response = await request(app).get('/income');
 
-        expect(response.body).toMatchObject({});
+        expect(response.body).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining(transactions[0]),
+                expect.objectContaining(transactions[1]),
+            ])
+        );
     });
 
     afterAll(async () => {
