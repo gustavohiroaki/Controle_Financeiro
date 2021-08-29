@@ -7,6 +7,7 @@ const GlobalStyles = createGlobalStyle`
         --transparentBackground: rgba(196,196,196,0.3);
         --primary: #1268EA;
         --textTitle: #444444;
+        --font: #F7F7F7;
         --gray: #D3D3D3;
     }
 
@@ -37,11 +38,24 @@ const GlobalStyles = createGlobalStyle`
     }
 
     body, input, textarea, button {
-        font-family: 'Baloo Tammudu 2', cursive;
+        font-family: 'Poppins', sans-serif;
+        outline: unset;
     }
 
     h1, h2, h3, h4, h5, h6, strong{
         font-weight: 600;
+
+        &.light {
+            color: var(--textTitle);
+        }
+
+        &.dark {
+            color: var(--font);
+        }
+    }
+
+    a {
+        text-decoration: none;
     }
 
     button {
