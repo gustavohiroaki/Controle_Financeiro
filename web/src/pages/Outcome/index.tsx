@@ -9,19 +9,19 @@ import { Input } from "../../components/Form";
 import { Container, Content, Box, Form } from "./styles";
 import { ConfirmButton } from "../../components/Buttons";
 
-const Income: React.FC = () => {
+const Outcome: React.FC = () => {
   return (
     <Container>
       <Sidebar />
       <Content>
-        <h1>Entrada de Dinheiro</h1>
+        <h1>Saída de Dinheiro</h1>
 
         <Box>
           <Formik
             initialValues={{ name: "", value: 0 }}
-            onSubmit={(income) => {
-              api.post("income", income).then(({ data }) => {
-                alert(`Ganho inserido com sucesso! ${data.name}`);
+            onSubmit={(outcome) => {
+              api.post("outcome", outcome).then(({ data }) => {
+                alert(`Gasto inserido com sucesso! ${data.name}`);
               });
             }}
           >
@@ -56,4 +56,4 @@ const Income: React.FC = () => {
   );
 };
 
-export default Income;
+export default Outcome;
