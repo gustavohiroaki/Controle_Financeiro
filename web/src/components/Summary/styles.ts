@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100%;
-  height: 17.5vh;
   padding: 20px 30px;
   margin-bottom: 35px;
 
@@ -10,10 +9,15 @@ export const Container = styled.div`
   color: var(--font);
 
   border-radius: 30px;
+
+  @media (max-width: 768px) {
+    height: 200px;
+  }
 `;
 
 export const Greeting = styled.div`
   width: 100%;
+  margin-bottom: 10px;
 
   font-size: 1.3rem;
   line-height: 2rem;
@@ -23,38 +27,28 @@ export const Greeting = styled.div`
 
 export const SummaryContent = styled.div`
   width: 100%;
-  height: 100%;
+  height: 60px;
 
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 
   div > div {
     span {
       font-size: 1.5rem;
     }
 
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 
-  @media (max-width: 1366px) {
-    div > div {
-      span {
-        font-size: 1.5rem;
-      }
-
-      font-size: 1.5rem;
-    }
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
   }
 `;
 
-export const Income = styled.div`
-  width: 30%;
-`;
-
-export const Outcome = styled.div`
-  width: 30%;
-`;
-
-export const Total = styled.div`
-  width: 30%;
+export const Content = styled.div`
+  @media (max-width: 768px) {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
 `;

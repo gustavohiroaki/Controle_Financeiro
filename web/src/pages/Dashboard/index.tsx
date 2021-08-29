@@ -1,6 +1,7 @@
 import React from "react";
 
 import Sidebar from "../../components/Sidebar";
+import Summary from "../../components/Summary";
 
 import { Container, Content, Box } from "./styles";
 
@@ -10,8 +11,8 @@ const Dashboard: React.FC = () => {
       <Sidebar />
       <Content>
         <h1>Dashboard</h1>
-
-        <Box />
+        <Summary />
+        {/* <Box /> */}
       </Content>
     </Container>
   );
