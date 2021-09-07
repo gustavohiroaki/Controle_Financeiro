@@ -2,12 +2,27 @@ import {
     createConnection,
     getConnectionOptions,
     ConnectionOptions,
+    Connection,
 } from 'typeorm';
 
-async function connectDB() {
-    const config = await getConnectionOptions(process.env.NODE_ENV);
+class Database {
+    config: ConnectionOptions;
+    connection: Connection;
+    environment: string;
 
-    await createConnection(config);
+    constructor(env?: string) {
+        this.environment = env || process.env.NODE_ENV || 'dev';
+    }
+
+    async connectDB() {
+        this.config = await getConnectionOptions(this.environment);
+        this.connection = await createConnection(this.config);
+        return this.connection;
+    }
+
+    async disconnectDB() {
+        this.connection.close();
+    }
 }
 
-export default connectDB;
+export default Database;

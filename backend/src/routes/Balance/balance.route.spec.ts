@@ -1,38 +1,29 @@
-import supertest from 'supertest';
-import {
-    Connection,
-    createConnection,
-    getConnection,
-    Migration,
-} from 'typeorm';
+import request from 'supertest';
+import { Connection, getConnectionManager, Migration } from 'typeorm';
+import Database from '../../database';
 import app from '../../app';
+import { Income } from '../../entities/Income';
+import { Outcome } from '../../entities/Outcome';
 
-interface TransactionType {
-    name: string;
-    value: number;
-}
-
-let transactions: TransactionType[];
+const transactions = [
+    {
+        name: 'Transaction 1',
+        value: 99.9,
+    },
+    {
+        name: 'Transaction 2',
+        value: 199.9,
+    },
+];
 let connection: Connection;
 let migrations: Migration[];
 
 describe('Balance Routes Testing', () => {
+    const db = new Database();
+
     beforeAll(async () => {
-        transactions = [
-            {
-                name: 'Transaction 1',
-                value: 99.9,
-            },
-            {
-                name: 'Transaction 2',
-                value: 199.9,
-            },
-        ];
-
-        connection = await createConnection('test');
-
+        connection = await db.connectDB();
         await connection.dropDatabase();
-
         migrations = await connection.runMigrations(); // Run migrations and return list of all migrations
     });
 
@@ -43,14 +34,12 @@ describe('Balance Routes Testing', () => {
         let outcomePromises: any = [];
 
         transactions.map((transaction) => {
-            incomePromises.push(
-                supertest(app).post('/income').send(transaction)
-            );
+            incomePromises.push(request(app).post('/income').send(transaction));
         });
 
         transactions.map((transaction) => {
             outcomePromises.push(
-                supertest(app).post('/outcome').send(transaction)
+                request(app).post('/outcome').send(transaction)
             );
         });
 
@@ -65,7 +54,7 @@ describe('Balance Routes Testing', () => {
             outcomeTotal = response.body.value + outcomeTotal;
         });
 
-        const response = await supertest(app).get('/balance');
+        const response = await request(app).get('/balance');
 
         expect(response.body).toEqual(
             expect.objectContaining({
@@ -76,14 +65,23 @@ describe('Balance Routes Testing', () => {
         );
     });
 
-    afterAll(async () => {
-        const mainConnection = getConnection();
+    afterEach(async () => {
+        await getConnectionManager()
+            .get(process.env.NODE_ENV)
+            .getRepository(Income)
+            .clear();
 
+        await getConnectionManager()
+            .get(process.env.NODE_ENV)
+            .getRepository(Outcome)
+            .clear();
+    });
+
+    afterAll(async () => {
         for (const migration of migrations) {
             await connection.undoLastMigration();
         }
 
-        await connection.close();
-        await mainConnection.close();
+        await db.disconnectDB();
     });
 });

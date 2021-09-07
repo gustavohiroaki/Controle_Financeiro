@@ -1,40 +1,28 @@
 import request from 'supertest';
-import {
-    Connection,
-    createConnection,
-    getConnection,
-    getConnectionManager,
-    Migration,
-    MigrationExecutor,
-} from 'typeorm';
+import { Connection, getConnectionManager, Migration } from 'typeorm';
+import Database from '../../database';
 import app from '../../app';
+import { Income } from '../../entities/Income';
 
-interface TransactionType {
-    name: string;
-    value: number;
-}
-
-let transactions: TransactionType[];
+const transactions = [
+    {
+        name: 'Transaction 1',
+        value: 99.9,
+    },
+    {
+        name: 'Transaction 2',
+        value: 199.9,
+    },
+];
 let connection: Connection;
 let migrations: Migration[];
 
 describe('Income Routes Testing', () => {
+    const db = new Database();
+
     beforeAll(async () => {
-        transactions = [
-            {
-                name: 'Transaction 1',
-                value: 99.9,
-            },
-            {
-                name: 'Transaction 2',
-                value: 199.9,
-            },
-        ];
-
-        connection = await createConnection('test');
-
+        connection = await db.connectDB();
         await connection.dropDatabase();
-
         migrations = await connection.runMigrations(); // Run migrations and return list of all migrations
     });
 
@@ -47,6 +35,7 @@ describe('Income Routes Testing', () => {
     });
 
     it('should list some transactions', async () => {
+        await request(app).post('/income').send(transactions[0]);
         await request(app).post('/income').send(transactions[1]);
 
         const response = await request(app).get('/income');
@@ -59,14 +48,18 @@ describe('Income Routes Testing', () => {
         );
     });
 
-    afterAll(async () => {
-        const mainConnection = getConnection();
+    afterEach(async () => {
+        await getConnectionManager()
+            .get(process.env.NODE_ENV)
+            .getRepository(Income)
+            .clear();
+    });
 
+    afterAll(async () => {
         for (const migration of migrations) {
             await connection.undoLastMigration();
         }
 
-        await connection.close();
-        await mainConnection.close();
+        await db.disconnectDB();
     });
 });
