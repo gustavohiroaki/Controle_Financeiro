@@ -22,7 +22,7 @@ describe('Outcome Routes Testing', () => {
 
     beforeAll(async () => {
         connection = await db.connectDB();
-        await connection.dropDatabase();
+
         migrations = await connection.runMigrations(); // Run migrations and return list of all migrations
     });
 

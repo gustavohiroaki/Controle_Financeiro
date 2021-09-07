@@ -37,7 +37,7 @@
         "typescript": "^4.2.3"
     },
     "scripts": {
-        "test": "cross-env NODE_ENV=test jest --detectOpenHandles",
+        "test": "cross-env NODE_ENV=test jest --detectOpenHandles --forceExit",
         "dev": "cross-env NODE_ENV=dev tsnd --respawn --ignore-watch node_modules src/index.ts",
         "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
         "commit": "cz"
