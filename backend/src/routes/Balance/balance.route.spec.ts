@@ -1,10 +1,6 @@
 import request from 'supertest';
-import { Connection, getConnectionManager, Migration } from 'typeorm';
-import Database from '../../database';
 import app from '../../app';
 import { IncomeRepository, OutcomeRepository } from '../../repositories';
-import { Income } from '../../repositories/entities/Income';
-import { Outcome } from '../../repositories/entities/Outcome';
 
 const transactions = [
     {
@@ -16,18 +12,8 @@ const transactions = [
         value: 199.9,
     },
 ];
-let connection: Connection;
-let migrations: Migration[];
 
 describe('Balance Routes Testing', () => {
-    const db = new Database();
-
-    beforeAll(async () => {
-        connection = await db.connectDB();
-
-        migrations = await connection.runMigrations(); // Run migrations and return list of all migrations
-    });
-
     it('should show balance 0', async () => {
         let incomeTotal: number = 0;
         let outcomeTotal: number = 0;
@@ -71,13 +57,5 @@ describe('Balance Routes Testing', () => {
         const outcomeRepository = new OutcomeRepository();
         await incomeRepository.clear();
         await outcomeRepository.clear();
-    });
-
-    afterAll(async () => {
-        for (const migration of migrations) {
-            await connection.undoLastMigration();
-        }
-
-        await db.disconnectDB();
     });
 });

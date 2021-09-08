@@ -1,8 +1,6 @@
 import request from 'supertest';
-import { Connection, Migration, getConnectionManager } from 'typeorm';
-import Database from '../../database';
 import app from '../../app';
-import { Outcome } from '../../repositories/entities/Outcome';
+import { IncomeRepository } from '../../repositories';
 
 let transactions = [
     {
@@ -14,18 +12,8 @@ let transactions = [
         value: 199.9,
     },
 ];
-let connection: Connection;
-let migrations: Migration[];
 
 describe('Outcome Routes Testing', () => {
-    const db = new Database();
-
-    beforeAll(async () => {
-        connection = await db.connectDB();
-
-        migrations = await connection.runMigrations(); // Run migrations and return list of all migrations
-    });
-
     it('should create a new outcome transaction and return the transaction data', async () => {
         const response = await request(app)
             .post('/outcome')
@@ -49,17 +37,7 @@ describe('Outcome Routes Testing', () => {
     });
 
     afterEach(async () => {
-        await getConnectionManager()
-            .get(process.env.NODE_ENV)
-            .getRepository(Outcome)
-            .clear();
-    });
-
-    afterAll(async () => {
-        for (const migration of migrations) {
-            await connection.undoLastMigration();
-        }
-
-        await db.disconnectDB();
+        const incomeRepository = new IncomeRepository();
+        await incomeRepository.clear();
     });
 });
