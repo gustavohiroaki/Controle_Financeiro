@@ -9,7 +9,7 @@
         "database": "finance_management",
         "synchronize": false,
         "logging": false,
-        "entities": ["./src/entities/**/*.ts"],
+        "entities": ["./src/repositories/entities/**/*.ts"],
         "migrations": ["./src/database/migrations/*.ts"],
         "cli": {
             "migrationsDir": "./src/database/migrations",
@@ -22,7 +22,7 @@
         "database": "./src/database/app.test.sql",
         "synchronize": false,
         "logging": false,
-        "entities": ["./src/entities/**/*.ts"],
+        "entities": ["./src/repositories/entities/**/*.ts"],
         "migrations": ["./src/database/migrations/*.ts"],
         "cli": {
             "migrationsDir": "./src/database/migrations",

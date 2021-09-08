@@ -2,7 +2,7 @@ import request from 'supertest';
 import { Connection, getConnectionManager, Migration } from 'typeorm';
 import Database from '../../database';
 import app from '../../app';
-import { Income } from '../../entities/Income';
+import { Income } from '../../repositories/entities/Income';
 
 const transactions = [
     {
@@ -22,7 +22,6 @@ describe('Income Routes Testing', () => {
 
     beforeAll(async () => {
         connection = await db.connectDB();
-
         migrations = await connection.runMigrations(); // Run migrations and return list of all migrations
     });
 

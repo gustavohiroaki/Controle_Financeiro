@@ -2,7 +2,7 @@ import request from 'supertest';
 import { Connection, Migration, getConnectionManager } from 'typeorm';
 import Database from '../../database';
 import app from '../../app';
-import { Outcome } from '../../entities/Outcome';
+import { Outcome } from '../../repositories/entities/Outcome';
 
 let transactions = [
     {

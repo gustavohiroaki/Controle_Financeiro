@@ -1,22 +1,14 @@
 import { Request, Response } from 'express';
-import { v4 as uuidv4 } from 'uuid';
-import { getConnectionManager } from 'typeorm';
 
-import { Income } from '../../../entities/Income';
-import { Outcome } from '../../../entities/Outcome';
+import { IncomeRepository, OutcomeRepository } from '../../../repositories';
 
 class BalanceController {
     public async index(req: Request, res: Response) {
-        const incomeRepository = getConnectionManager()
-            .get(process.env.NODE_ENV)
-            .getRepository(Income);
+        const incomeRepository = new IncomeRepository();
+        const outcomeRepository = new OutcomeRepository();
 
-        const outcomeRepository = getConnectionManager()
-            .get(process.env.NODE_ENV)
-            .getRepository(Outcome);
-
-        const incomeTransactions = await incomeRepository.find();
-        const outcomeTransactions = await outcomeRepository.find();
+        const incomeTransactions = await incomeRepository.findAll();
+        const outcomeTransactions = await outcomeRepository.findAll();
 
         let incomeTotal: number = 0;
         let outcomeTotal: number = 0;

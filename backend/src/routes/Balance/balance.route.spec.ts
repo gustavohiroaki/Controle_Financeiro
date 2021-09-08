@@ -2,8 +2,9 @@ import request from 'supertest';
 import { Connection, getConnectionManager, Migration } from 'typeorm';
 import Database from '../../database';
 import app from '../../app';
-import { Income } from '../../entities/Income';
-import { Outcome } from '../../entities/Outcome';
+import { IncomeRepository, OutcomeRepository } from '../../repositories';
+import { Income } from '../../repositories/entities/Income';
+import { Outcome } from '../../repositories/entities/Outcome';
 
 const transactions = [
     {
@@ -66,15 +67,10 @@ describe('Balance Routes Testing', () => {
     });
 
     afterEach(async () => {
-        await getConnectionManager()
-            .get(process.env.NODE_ENV)
-            .getRepository(Income)
-            .clear();
-
-        await getConnectionManager()
-            .get(process.env.NODE_ENV)
-            .getRepository(Outcome)
-            .clear();
+        const incomeRepository = new IncomeRepository();
+        const outcomeRepository = new OutcomeRepository();
+        await incomeRepository.clear();
+        await outcomeRepository.clear();
     });
 
     afterAll(async () => {

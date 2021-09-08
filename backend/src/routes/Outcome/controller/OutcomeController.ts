@@ -1,26 +1,18 @@
 import { Request, Response } from 'express';
 import { v4 as uuidv4 } from 'uuid';
-import { getConnectionManager } from 'typeorm';
-
-import { Outcome } from '../../../entities/Outcome';
+import { Outcome } from '../../../repositories/entities/Outcome';
+import { OutcomeRepository } from '../../../repositories';
 
 class OutcomeController {
     public async index(req: Request, res: Response) {
-        const outcomeRepository = getConnectionManager()
-            .get(process.env.NODE_ENV)
-            .getRepository(Outcome);
-
-        const outcomeTransactions = await outcomeRepository.find();
-
+        const outcomeRepository = new OutcomeRepository();
+        const outcomeTransactions = await outcomeRepository.findAll();
         return res.json(outcomeTransactions);
     }
 
     public async create(req: Request, res: Response) {
         const { name, value } = req.body;
-        const outcomeRepository = getConnectionManager()
-            .get(process.env.NODE_ENV)
-            .getRepository(Outcome);
-
+        const outcomeRepository = new OutcomeRepository();
         const newTransaction = new Outcome();
 
         try {
