@@ -6,9 +6,12 @@ const GlobalStyles = createGlobalStyle`
         --background: #F7F7F7;
         --transparentBackground: rgba(196,196,196,0.3);
         --primary: #1268EA;
+        --lightPrimary: #9FC6FF;
         --textTitle: #444444;
         --font: #F7F7F7;
         --gray: #D3D3D3;
+        --red: #F03327;
+        --lightRed: #FFB0B0;
     }
 
     * {
@@ -65,6 +68,27 @@ const GlobalStyles = createGlobalStyle`
     [disabled] {
         opacity: 0.6;
         cursor: not-allowed;
+    }
+
+    /* width */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: var(--background); 
+    }
+    
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        border-radius: 30px;
+        background: var(--primary); 
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--lightPrimary); 
     }
 
 `;

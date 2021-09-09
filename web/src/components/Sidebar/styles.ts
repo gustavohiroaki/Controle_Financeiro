@@ -5,8 +5,6 @@ const Container = styled.aside`
   @media (max-width: 1000px) {
     display: none;
   }
-
-  width: 30vw;
   max-width: 440px;
   height: 100vh;
 
