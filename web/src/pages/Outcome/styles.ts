@@ -1,14 +1,22 @@
 import styled from "styled-components";
 
 const Container = styled.div`
-  display: flex;
+  @media (max-width: 1000px) {
+    grid-template-columns: 1fr;
+  }
+
+  display: grid;
+  grid-template-columns: 1fr 3fr;
 `;
 
 const Content = styled.main`
   width: 100%;
-  height: 100vh;
+  height: 100%;
 
   padding: 30px 30px;
+
+  display: flex;
+  flex-direction: column;
 `;
 
 const Box = styled.div`
