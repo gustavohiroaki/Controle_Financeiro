@@ -1,4 +1,9 @@
-import { Connection, getConnectionManager, Repository } from 'typeorm';
+import {
+    Connection,
+    getConnectionManager,
+    Repository,
+    getRepository,
+} from 'typeorm';
 import { Outcome } from './entities/Outcome';
 
 class OutcomeRepository {
@@ -6,9 +11,7 @@ class OutcomeRepository {
     repository: Repository<Outcome>;
 
     constructor(env?: string) {
-        const environment = env || process.env.NODE_ENV || 'test';
-        this.connection = getConnectionManager().get(environment);
-        this.repository = this.connection.getRepository(Outcome);
+        this.repository = getRepository(Outcome);
     }
 
     public async findAll(): Promise<Outcome[]> {

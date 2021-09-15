@@ -1,11 +1,9 @@
 import serverConfig from './config/server.config';
 import app from './app';
-import Database from './database';
+import { startDb } from './database';
 
-const db = new Database();
+startDb();
 
-db.connectDB().then(() => {
-    app.listen(serverConfig.port, () => {
-        console.log(`Server is listening on port ${serverConfig.port}`);
-    });
+app.listen(serverConfig.port, () => {
+    console.log(`Server is listening on port ${serverConfig.port}`);
 });
