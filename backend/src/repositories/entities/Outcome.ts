@@ -2,9 +2,11 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    OneToOne,
     PrimaryColumn,
     UpdateDateColumn,
 } from 'typeorm';
+import { Category } from './Category';
 
 @Entity('outcome')
 export class Outcome {
@@ -16,6 +18,9 @@ export class Outcome {
 
     @Column()
     value: number;
+
+    @OneToOne(() => Category, (category) => category.id)
+    category: Category;
 
     @CreateDateColumn()
     created_at: Date;

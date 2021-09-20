@@ -1,7 +1,13 @@
 import request from 'supertest';
-import app from '../../app';
-import { IncomeRepository } from '../../repositories';
+import { Express } from 'express';
+import {
+    buildTestAppInstance,
+    closeAppInstance,
+    clearDb,
+    undoMigrations,
+} from '../../config/testConfigBuilder';
 
+let server: Express;
 const transactions = [
     {
         name: 'Transaction 1',
@@ -14,8 +20,20 @@ const transactions = [
 ];
 
 describe('Income Routes Testing', () => {
+    beforeAll(async () => {
+        server = await buildTestAppInstance();
+    });
+
+    afterEach(async () => {
+        await clearDb();
+    });
+
+    afterAll(async () => {
+        await undoMigrations();
+        await closeAppInstance();
+    });
     it('should create a new income transaction and return the transaction data', async () => {
-        const response = await request(app)
+        const response = await request(server)
             .post('/income')
             .send(transactions[0]);
 
@@ -23,10 +41,10 @@ describe('Income Routes Testing', () => {
     });
 
     it('should list some transactions', async () => {
-        await request(app).post('/income').send(transactions[0]);
-        await request(app).post('/income').send(transactions[1]);
+        await request(server).post('/income').send(transactions[0]);
+        await request(server).post('/income').send(transactions[1]);
 
-        const response = await request(app).get('/income');
+        const response = await request(server).get('/income');
 
         expect(response.body).toEqual(
             expect.arrayContaining([
@@ -34,10 +52,5 @@ describe('Income Routes Testing', () => {
                 expect.objectContaining(transactions[1]),
             ])
         );
-    });
-
-    afterEach(async () => {
-        const incomeRepository = new IncomeRepository();
-        await incomeRepository.clear();
     });
 });

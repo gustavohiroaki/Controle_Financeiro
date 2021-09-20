@@ -4,15 +4,19 @@ import { Income } from '../../../repositories/entities/Income';
 import { IncomeRepository } from '../../../repositories';
 
 class IncomeController {
-    public async index(req: Request, res: Response) {
-        const incomeRepository = new IncomeRepository();
-        const incomeTransactions = await incomeRepository.findAll();
-        return res.json(incomeTransactions);
+    private incomeRepository: IncomeRepository;
+
+    constructor() {
+        this.incomeRepository = new IncomeRepository();
     }
 
-    public async create(req: Request, res: Response) {
+    index = async (req: Request, res: Response) => {
+        const incomeTransactions = await this.incomeRepository.findAll();
+        return res.json(incomeTransactions);
+    };
+
+    create = async (req: Request, res: Response) => {
         const { name, value } = req.body;
-        const incomeRepository = new IncomeRepository();
         const newTransaction = new Income();
         try {
             Object.assign(newTransaction, {
@@ -21,13 +25,13 @@ class IncomeController {
                 value,
             });
 
-            const response = await incomeRepository.save(newTransaction);
+            const response = await this.incomeRepository.save(newTransaction);
 
             return res.json(response);
         } catch (err) {
             return res.status(400).json(err);
         }
-    }
+    };
 }
 
 export default new IncomeController();

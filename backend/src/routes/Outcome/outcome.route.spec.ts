@@ -1,6 +1,13 @@
 import request from 'supertest';
-import app from '../../app';
-import { IncomeRepository } from '../../repositories';
+import { Express } from 'express';
+import {
+    buildTestAppInstance,
+    closeAppInstance,
+    clearDb,
+    undoMigrations,
+} from '../../config/testConfigBuilder';
+
+let server: Express;
 
 let transactions = [
     {
@@ -14,8 +21,20 @@ let transactions = [
 ];
 
 describe('Outcome Routes Testing', () => {
+    beforeAll(async () => {
+        server = await buildTestAppInstance();
+    });
+
+    afterEach(async () => {
+        await clearDb();
+    });
+
+    afterAll(async () => {
+        await undoMigrations();
+        await closeAppInstance();
+    });
     it('should create a new outcome transaction and return the transaction data', async () => {
-        const response = await request(app)
+        const response = await request(server)
             .post('/outcome')
             .send(transactions[0]);
 
@@ -23,10 +42,10 @@ describe('Outcome Routes Testing', () => {
     });
 
     it('should list some outcome transactions', async () => {
-        await request(app).post('/outcome').send(transactions[0]);
-        await request(app).post('/outcome').send(transactions[1]);
+        await request(server).post('/outcome').send(transactions[0]);
+        await request(server).post('/outcome').send(transactions[1]);
 
-        const response = await request(app).get('/outcome');
+        const response = await request(server).get('/outcome');
 
         expect(response.body).toEqual(
             expect.arrayContaining([
@@ -34,10 +53,5 @@ describe('Outcome Routes Testing', () => {
                 expect.objectContaining(transactions[1]),
             ])
         );
-    });
-
-    afterEach(async () => {
-        const incomeRepository = new IncomeRepository();
-        await incomeRepository.clear();
     });
 });

@@ -39,6 +39,7 @@
     "scripts": {
         "test": "cross-env NODE_ENV=test jest --runInBand",
         "dev": "cross-env NODE_ENV=dev tsnd --respawn --ignore-watch node_modules src/index.ts",
+        "dev:debug": "cross-env NODE_ENV=dev tsnd --inspect=0.0.0.0:7001 --exit-child --respawn --ignore-watch node_modules src/index.ts",
         "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
         "commit": "cz"
     },

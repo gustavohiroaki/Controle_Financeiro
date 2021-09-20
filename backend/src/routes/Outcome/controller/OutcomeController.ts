@@ -4,15 +4,20 @@ import { Outcome } from '../../../repositories/entities/Outcome';
 import { OutcomeRepository } from '../../../repositories';
 
 class OutcomeController {
-    public async index(req: Request, res: Response) {
-        const outcomeRepository = new OutcomeRepository();
-        const outcomeTransactions = await outcomeRepository.findAll();
-        return res.json(outcomeTransactions);
+    private outcomeRepository: OutcomeRepository;
+
+    constructor() {
+        this.outcomeRepository = new OutcomeRepository();
     }
 
-    public async create(req: Request, res: Response) {
+    index = async (req: Request, res: Response) => {
+        const outcomeTransactions = await this.outcomeRepository.findAll();
+        return res.json(outcomeTransactions);
+    };
+
+    create = async (req: Request, res: Response) => {
         const { name, value } = req.body;
-        const outcomeRepository = new OutcomeRepository();
+
         const newTransaction = new Outcome();
 
         try {
@@ -22,13 +27,13 @@ class OutcomeController {
                 value,
             });
 
-            const response = await outcomeRepository.save(newTransaction);
+            const response = await this.outcomeRepository.save(newTransaction);
 
             return res.json(response);
         } catch (err) {
             return res.status(400).json(err);
         }
-    }
+    };
 }
 
 export default new OutcomeController();

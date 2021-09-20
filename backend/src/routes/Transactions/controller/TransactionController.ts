@@ -3,18 +3,23 @@ import { Request, Response } from 'express';
 import { IncomeRepository, OutcomeRepository } from '../../../repositories';
 
 class TransactionController {
-    public async index(req: Request, res: Response) {
-        const incomeRepository = new IncomeRepository();
-        const income = await incomeRepository.findAll();
+    private incomeRepository: IncomeRepository;
+    private outcomeRepository: OutcomeRepository;
 
-        const outcomeRepository = new OutcomeRepository();
-        const outcome = await outcomeRepository.findAll();
+    constructor() {
+        this.incomeRepository = new IncomeRepository();
+        this.outcomeRepository = new OutcomeRepository();
+    }
+
+    index = async (req: Request, res: Response) => {
+        const income = await this.incomeRepository.findAll();
+        const outcome = await this.outcomeRepository.findAll();
 
         return res.json({
             income,
             outcome,
         });
-    }
+    };
 }
 
 export default new TransactionController();

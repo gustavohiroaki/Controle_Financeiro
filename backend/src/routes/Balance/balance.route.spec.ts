@@ -1,6 +1,13 @@
 import request from 'supertest';
-import app from '../../app';
-import { IncomeRepository, OutcomeRepository } from '../../repositories';
+import { Express } from 'express';
+import {
+    buildTestAppInstance,
+    closeAppInstance,
+    clearDb,
+    undoMigrations,
+} from '../../config/testConfigBuilder';
+
+let server: Express;
 
 const transactions = [
     {
@@ -14,6 +21,18 @@ const transactions = [
 ];
 
 describe('Balance Routes Testing', () => {
+    beforeAll(async () => {
+        server = await buildTestAppInstance();
+    });
+
+    afterEach(async () => {
+        await clearDb();
+    });
+
+    afterAll(async () => {
+        await undoMigrations();
+        await closeAppInstance();
+    });
     it('should show balance 0', async () => {
         let incomeTotal: number = 0;
         let outcomeTotal: number = 0;
@@ -21,12 +40,14 @@ describe('Balance Routes Testing', () => {
         let outcomePromises: any = [];
 
         transactions.map((transaction) => {
-            incomePromises.push(request(app).post('/income').send(transaction));
+            incomePromises.push(
+                request(server).post('/income').send(transaction)
+            );
         });
 
         transactions.map((transaction) => {
             outcomePromises.push(
-                request(app).post('/outcome').send(transaction)
+                request(server).post('/outcome').send(transaction)
             );
         });
 
@@ -41,7 +62,7 @@ describe('Balance Routes Testing', () => {
             outcomeTotal = response.body.value + outcomeTotal;
         });
 
-        const response = await request(app).get('/balance');
+        const response = await request(server).get('/balance');
 
         expect(response.body).toEqual(
             expect.objectContaining({
@@ -50,12 +71,5 @@ describe('Balance Routes Testing', () => {
                 remaining: 0,
             })
         );
-    });
-
-    afterEach(async () => {
-        const incomeRepository = new IncomeRepository();
-        const outcomeRepository = new OutcomeRepository();
-        await incomeRepository.clear();
-        await outcomeRepository.clear();
     });
 });

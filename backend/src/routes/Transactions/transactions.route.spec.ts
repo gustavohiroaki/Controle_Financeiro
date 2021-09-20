@@ -1,9 +1,28 @@
 import request from 'supertest';
-import app from '../../app';
+import { Express } from 'express';
+import {
+    buildTestAppInstance,
+    closeAppInstance,
+    clearDb,
+    undoMigrations,
+} from '../../config/testConfigBuilder';
 
+let server: Express;
 describe('Transaction Routes Testing', () => {
+    beforeAll(async () => {
+        server = await buildTestAppInstance();
+    });
+
+    afterEach(async () => {
+        await clearDb();
+    });
+
+    afterAll(async () => {
+        await undoMigrations();
+        await closeAppInstance();
+    });
     it('should return 200 on get root route', async () => {
-        const response = await request(app).get('/transactions');
+        const response = await request(server).get('/transactions');
         expect(response.status).toBe(200);
     });
 
@@ -20,10 +39,10 @@ describe('Transaction Routes Testing', () => {
                 value: 123,
             };
 
-            await request(app).post(`/${entity}`).send(foo);
-            await request(app).post(`/${entity}`).send(bar);
+            await request(server).post(`/${entity}`).send(foo);
+            await request(server).post(`/${entity}`).send(bar);
 
-            const response = await request(app).get('/transactions');
+            const response = await request(server).get('/transactions');
             expect(response.status).toBe(200);
             expect(response.body[entity]).toEqual(
                 expect.arrayContaining([
