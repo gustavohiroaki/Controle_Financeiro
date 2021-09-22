@@ -1,6 +1,5 @@
 import React from "react";
 
-import { Minus, Plus } from "../../components/Icons";
 import Sidebar from "../../components/Sidebar";
 import Summary from "../../components/Summary";
 import Table from "../../components/Table";
@@ -14,15 +13,13 @@ const Dashboard: React.FC = () => {
       <Content>
         <Summary />
         <BoxWrapper>
-          <Box>
+          <Box gridArea="area-1"></Box>
+          <Box gridArea="area-2">
             <h2>Últimas transações</h2>
 
             <Table />
           </Box>
-          <Box>
-            <Plus />
-            <Minus />
-          </Box>
+          <Box gridArea="area-3"></Box>
         </BoxWrapper>
       </Content>
     </Container>
