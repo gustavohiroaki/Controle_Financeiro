@@ -35,6 +35,7 @@ const BoxWrapper = styled.div`
 
   display: grid;
 
+  grid-template-rows: 1fr 1fr;
   grid-template-areas: "area-1 area-1 area-1" "area-2 area-3 area-3";
   column-gap: 15px;
   row-gap: 15px;
@@ -50,8 +51,12 @@ const Box = styled.div<IGridAreaProps>`
 
   grid-area: ${(props) => props.gridArea || "auto"};
 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   & > h2 {
-    margin-bottom: 20px;
+    margin-bottom: 40px;
   }
 `;
 

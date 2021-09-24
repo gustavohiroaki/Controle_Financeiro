@@ -69,7 +69,7 @@ const Income: React.FC = () => {
           </Table>
         </Box>
 
-        <Box gridArea="area-3">
+        <Box gridArea="area-3" centered>
           <h2>Entrada de Dinheiro</h2>
           <Formik
             initialValues={{ name: "", value: 0 }}

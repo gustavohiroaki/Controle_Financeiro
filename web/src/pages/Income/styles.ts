@@ -4,6 +4,7 @@ type GridAreas = "area-1" | "area-2" | "area-3";
 
 interface IGridAreaProps {
   gridArea: GridAreas;
+  centered?: boolean;
 }
 
 const Container = styled.div`
@@ -17,11 +18,12 @@ const Container = styled.div`
 
 const Content = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100vh;
 
   padding: 30px 30px;
 
   display: grid;
+  grid-template-rows: 1fr 1fr;
   grid-template-areas:
     "area-1 area-3"
     "area-2 area-3";
@@ -41,7 +43,7 @@ const Box = styled.div<IGridAreaProps>`
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: ${(props) => (props.centered ? "center" : "start")};
   align-items: center;
 
   overflow: scroll;
