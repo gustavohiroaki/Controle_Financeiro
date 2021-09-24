@@ -35,6 +35,7 @@ const BoxWrapper = styled.div`
 
   display: grid;
 
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   grid-template-areas: "area-1 area-1 area-1" "area-2 area-3 area-3";
   column-gap: 15px;

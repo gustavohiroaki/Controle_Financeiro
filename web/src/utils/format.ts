@@ -6,3 +6,9 @@ export function toCurrency(value: number | undefined) {
     currency: "BRL",
   }).format(value);
 }
+
+export function toDate(value: string) {
+  if (!value) return;
+  const date = new Date(value);
+  return new Intl.DateTimeFormat("pt-BR").format(date);
+}

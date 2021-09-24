@@ -5,7 +5,7 @@ import Sidebar from "../../components/Sidebar";
 import Summary from "../../components/Summary";
 import Table from "../../components/Table";
 import api from "../../service/api";
-import { toCurrency } from "../../utils/format";
+import { toCurrency, toDate } from "../../utils/format";
 
 import { Container, Content, BoxWrapper, Box } from "./styles";
 
@@ -38,11 +38,13 @@ const Dashboard: React.FC = () => {
       ...temp,
       type: "income",
       value: toCurrency(temp.value),
+      date: toDate(temp.created_at),
     }));
     const tempOutcome = outcome.map((temp) => ({
       ...temp,
       type: "outcome",
       value: toCurrency(temp.value),
+      date: toDate(temp.created_at),
     }));
     const transactions = [...tempIncome, ...tempOutcome];
     transactions.sort((a, b) => {
@@ -63,7 +65,7 @@ const Dashboard: React.FC = () => {
           <Box gridArea="area-2">
             <h2>Últimas transações</h2>
 
-            <Table columnNumber={3}>
+            <Table columnNumber={4}>
               {transactions.map((transaction) => (
                 <div key={transaction.id}>
                   <div className="center">
@@ -74,6 +76,7 @@ const Dashboard: React.FC = () => {
                     <span title={transaction.name}>{transaction.name}</span>
                   </div>
                   <div className="center">{transaction.value}</div>
+                  <div className="center">{transaction.date}</div>
                 </div>
               ))}
             </Table>
