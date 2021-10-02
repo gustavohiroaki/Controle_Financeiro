@@ -12,3 +12,10 @@ export function toDate(value: string) {
   const date = new Date(value);
   return new Intl.DateTimeFormat("pt-BR").format(date);
 }
+
+export function parseCurrency(value: string) {
+  if (!value) return;
+  value = value.replace(".", "");
+  value = value.replace(",", ".");
+  return parseFloat(value);
+}

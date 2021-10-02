@@ -37,7 +37,6 @@ const Outcome: React.FC = () => {
                   onChange={handleChange}
                 />
                 <Input
-                  type="number"
                   label
                   labelText="Valor"
                   id="value"

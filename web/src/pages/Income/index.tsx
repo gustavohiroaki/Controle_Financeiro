@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Formik } from "formik";
+import { useFormik } from "formik";
 
 import api from "../../service/api";
 
@@ -9,8 +9,9 @@ import { Input } from "../../components/Form";
 import { Container, Content, Box, Form } from "./styles";
 import { ConfirmButton } from "../../components/Buttons";
 import Table from "../../components/Table";
-import { toCurrency } from "../../utils/format";
+import { parseCurrency, toCurrency } from "../../utils/format";
 import { Plus } from "../../components/Icons";
+import { currencyMask } from "../../utils/masks";
 
 interface Transaction {
   id: string;
@@ -20,12 +21,24 @@ interface Transaction {
   updated_at: string;
 }
 
+interface Category {
+  id: string;
+  name: string;
+  created_at: string;
+  updated_at: string;
+}
+
 const Income: React.FC = () => {
   const [income, setIncome] = useState<Transaction[]>([]);
+  const [categories, setCategories] = useState<Category[]>();
 
   useEffect(() => {
     api.get("income").then((response) => {
       setIncome(response.data);
+    });
+
+    api.get("category").then((response) => {
+      setCategories(response.data);
     });
   }, []);
 
@@ -44,6 +57,31 @@ const Income: React.FC = () => {
     });
     return transactions;
   }, [income]);
+
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      value: "",
+      category: "",
+    },
+    onSubmit: (incomeSubmit) => {
+      api
+        .post("income", {
+          ...incomeSubmit,
+          value: parseCurrency(incomeSubmit.value),
+        })
+        .then(({ data }) => {
+          setIncome([...income, data]);
+          alert(`Ganho inserido com sucesso! ${data.name}`);
+        });
+    },
+  });
+
+  useEffect(() => {
+    let tempValue = currencyMask(formik.values.value);
+    formik.setFieldValue("value", tempValue);
+    console.log(formik.values.value);
+  }, [formik.values.value]);
 
   return (
     <Container>
@@ -71,40 +109,37 @@ const Income: React.FC = () => {
 
         <Box gridArea="area-3" centered>
           <h2>Entrada de Dinheiro</h2>
-          <Formik
-            initialValues={{ name: "", value: 0 }}
-            onSubmit={(incomeSubmit) => {
-              api.post("income", incomeSubmit).then(({ data }) => {
-                setIncome([...income, data]);
-                alert(`Ganho inserido com sucesso! ${data.name}`);
-              });
-            }}
-          >
-            {({ values, errors, handleSubmit, handleChange }) => (
-              <Form onSubmit={handleSubmit}>
-                <Input
-                  label
-                  labelText="Name"
-                  autoComplete="off"
-                  id="name"
-                  name="name"
-                  value={values.name}
-                  onChange={handleChange}
-                />
-                <Input
-                  type="number"
-                  label
-                  labelText="Valor"
-                  id="value"
-                  name="value"
-                  value={values.value}
-                  onChange={handleChange}
-                />
 
-                <ConfirmButton type="submit">Send</ConfirmButton>
-              </Form>
-            )}
-          </Formik>
+          <Form onSubmit={formik.handleSubmit}>
+            <Input
+              label
+              labelText="Name"
+              autoComplete="off"
+              id="name"
+              name="name"
+              value={formik.values.name}
+              onChange={formik.handleChange}
+            />
+            <select name="category" id="category">
+              {categories &&
+                categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+            </select>
+            <Input
+              label
+              labelText="Valor"
+              id="value"
+              name="value"
+              inputTypeStyle="currency"
+              value={formik.values.value}
+              onChange={formik.handleChange}
+            />
+
+            <ConfirmButton type="submit">Send</ConfirmButton>
+          </Form>
         </Box>
       </Content>
     </Container>
