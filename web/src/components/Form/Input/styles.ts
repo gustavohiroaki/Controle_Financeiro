@@ -4,7 +4,11 @@ interface InputProps {
   error?: boolean;
 }
 
-export const Container = styled.input<InputProps>`
+interface WrapperProps extends InputProps {
+  isFocused: boolean;
+}
+
+export const CustomInput = styled.input<InputProps>`
   width: 300px;
   height: 50px;
   padding: 10px 20px;
@@ -15,4 +19,45 @@ export const Container = styled.input<InputProps>`
   &:focus {
     border: 1px solid var(--primary);
   }
+`;
+
+export const CurrencyInputContainer = styled.div<WrapperProps>`
+  width: 300px;
+  height: 50px;
+  border-radius: 15px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  transition: border 0.15s;
+  border: 1px solid
+    ${(props) =>
+      (props.error && "red") ||
+      (props.isFocused && "var(--primary)") ||
+      "var(--gray)"};
+
+  span {
+    background-color: ${(props) =>
+      (props.error && "red") ||
+      (props.isFocused && "var(--primary)") ||
+      "var(--transparentBackground)"};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    height: 100%;
+    border-radius: 15px 0 0 15px;
+    color: ${(props) =>
+      (props.isFocused && "var(--white)") || "var(--textTitle)"};
+    font-size: 1rem;
+    transition: color 0.15s, background-color 0.15s;
+  }
+`;
+export const CurrencyInput = styled.input`
+  width: 80%;
+  height: 40px;
+  margin-left: 15px;
+  border-radius: 0px 15px 15px 0px;
+  border: none;
 `;

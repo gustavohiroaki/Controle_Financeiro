@@ -1,19 +1,45 @@
-import React, { InputHTMLAttributes } from "react";
+import React, { useCallback, useRef, useState } from "react";
 
-import { Container } from "./styles";
+import { CustomInput, CurrencyInput, CurrencyInputContainer } from "./styles";
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+type InputType = "currency";
+
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: boolean;
   label?: boolean;
   labelText?: string;
+  inputTypeStyle?: InputType;
   id: string;
 }
 
-const Input: React.FC<InputProps> = ({ error, label, labelText, ...rest }) => {
+const Input: React.FC<InputProps> = ({
+  error,
+  label,
+  labelText,
+  inputTypeStyle,
+  ...rest
+}) => {
+  const [isFocused, setIsFocused] = useState(false);
+
+  const handleFocusWrapper = useCallback(() => {
+    setIsFocused(!isFocused);
+  }, [isFocused]);
+
   return (
     <div>
       {label && <label htmlFor={rest.id}>{labelText}</label>}
-      <Container {...rest} />
+
+      {inputTypeStyle === "currency" && (
+        <CurrencyInputContainer isFocused={isFocused}>
+          <span>R$</span>
+          <CurrencyInput
+            onFocus={handleFocusWrapper}
+            onBlur={handleFocusWrapper}
+            {...rest}
+          />
+        </CurrencyInputContainer>
+      )}
+      {!inputTypeStyle && <CustomInput {...rest} />}
     </div>
   );
 };

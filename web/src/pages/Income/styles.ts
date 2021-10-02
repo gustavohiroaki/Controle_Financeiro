@@ -59,7 +59,7 @@ const Form = styled.form`
   align-items: center;
   flex-direction: column;
 
-  div {
+  & > div {
     display: flex;
     flex-direction: column;
     margin-bottom: 1.5rem;
