@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import api from "../../service/api";
 
 import Sidebar from "../../components/Sidebar";
-import { Input } from "../../components/Form";
+import { Input, Select } from "../../components/Form";
 
 import { Container, Content, Box, Form } from "./styles";
 import { ConfirmButton } from "../../components/Buttons";
@@ -28,17 +28,26 @@ interface Category {
   updated_at: string;
 }
 
+interface SelectProps {
+  value: string;
+  label: string;
+}
+
 const Income: React.FC = () => {
   const [income, setIncome] = useState<Transaction[]>([]);
-  const [categories, setCategories] = useState<Category[]>();
+  const [categories, setCategories] = useState<SelectProps[]>();
 
   useEffect(() => {
     api.get("income").then((response) => {
       setIncome(response.data);
     });
 
-    api.get("category").then((response) => {
-      setCategories(response.data);
+    api.get<Category[]>("category").then((response) => {
+      const selectCategories = response.data.map((category) => ({
+        value: category.id,
+        label: category.name,
+      }));
+      setCategories(selectCategories);
     });
   }, []);
 
@@ -120,14 +129,7 @@ const Income: React.FC = () => {
               value={formik.values.name}
               onChange={formik.handleChange}
             />
-            <select name="category" id="category">
-              {categories &&
-                categories.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
-                  </option>
-                ))}
-            </select>
+            <Select options={categories} name="category" id="category"></Select>
             <Input
               label
               labelText="Valor"
