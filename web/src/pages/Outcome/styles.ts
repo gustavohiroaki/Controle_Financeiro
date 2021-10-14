@@ -1,48 +1,45 @@
 import styled from "styled-components";
+import { Box } from "../../components/molecules";
 
-const Container = styled.div`
-  @media (max-width: 1000px) {
-    grid-template-columns: 1fr;
-  }
+type GridAreas = "area-1" | "area-2" | "area-3";
 
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-`;
+interface IGridAreaProps {
+  gridArea: GridAreas;
+  centered?: boolean;
+}
 
-const Content = styled.main`
+export const ContentWrapper = styled.div`
   width: 100%;
   height: 100%;
 
   padding: 30px 30px;
 
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "area-1 area-3"
+    "area-2 area-3";
+  column-gap: 15px;
+  row-gap: 15px;
+`;
+
+export const OutcomeBox = styled(Box)<IGridAreaProps>`
   display: flex;
   flex-direction: column;
-`;
-
-const Box = styled.div`
-  width: 100%;
-  height: 95%;
-  padding: 30px 30px;
-
-  background-color: var(--white);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
-  display: flex;
-  justify-content: center;
+  justify-content: ${(props) => (props.centered ? "center" : "start")};
   align-items: center;
+
+  overflow: scroll;
+  grid-area: ${(props) => props.gridArea || "auto"};
 `;
 
-const Form = styled.form`
+export const Form = styled.form`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 
   & > div {
-    display: flex;
-    flex-direction: column;
     margin-bottom: 1.5rem;
   }
 `;
-
-export { Container, Content, Box, Form };

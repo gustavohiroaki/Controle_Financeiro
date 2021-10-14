@@ -1,13 +1,13 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Minus, Plus } from "../../components/Icons";
 
-import Sidebar from "../../components/Sidebar";
-import Summary from "../../components/Summary";
-import Table from "../../components/Table";
+import { BoxZone, SummaryZone } from "../../components/templates/Dashboard";
+import { Minus, Plus } from "../../components/atoms/Icons";
+import { Summary, Table } from "../../components/molecules";
+import { DashBox, BoxWrapper, ContentWrapper } from "./styles";
+
 import api from "../../service/api";
-import { toCurrency, toDate } from "../../utils/format";
 
-import { Container, Content, BoxWrapper, Box } from "./styles";
+import { toCurrency, toDate } from "../../utils/format";
 
 interface Transaction {
   id: string;
@@ -56,15 +56,16 @@ const Dashboard: React.FC = () => {
   }, [income, outcome]);
 
   return (
-    <Container>
-      <Sidebar />
-      <Content>
+    <ContentWrapper>
+      <SummaryZone>
         <Summary />
-        <BoxWrapper>
-          <Box gridArea="area-1"></Box>
-          <Box gridArea="area-2">
-            <h2>Últimas transações</h2>
+      </SummaryZone>
 
+      <BoxZone>
+        <BoxWrapper>
+          <DashBox gridArea="area-1" />
+          <DashBox gridArea="area-2">
+            <h2>Últimas transações</h2>
             <Table columnNumber={4}>
               {transactions.map((transaction) => (
                 <div key={transaction.id}>
@@ -80,11 +81,11 @@ const Dashboard: React.FC = () => {
                 </div>
               ))}
             </Table>
-          </Box>
-          <Box gridArea="area-3"></Box>
+          </DashBox>
+          <DashBox gridArea="area-3" />
         </BoxWrapper>
-      </Content>
-    </Container>
+      </BoxZone>
+    </ContentWrapper>
   );
 };
 

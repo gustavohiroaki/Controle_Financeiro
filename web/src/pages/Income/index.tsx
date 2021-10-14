@@ -1,16 +1,14 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useFormik } from "formik";
 
+import { Input, Select } from "../../components/atoms";
+import { Plus } from "../../components/atoms/Icons";
+import { ConfirmButton } from "../../components/atoms/Buttons";
+import { InputLabel, Table } from "../../components/molecules";
+import { ContentWrapper, IncomeBox, Form } from "./styles";
+
 import api from "../../service/api";
-
-import Sidebar from "../../components/Sidebar";
-import { Input, Select } from "../../components/Form";
-
-import { Container, Content, Box, Form } from "./styles";
-import { ConfirmButton } from "../../components/Buttons";
-import Table from "../../components/Table";
 import { parseCurrency, toCurrency } from "../../utils/format";
-import { Plus } from "../../components/Icons";
 import { currencyMask } from "../../utils/masks";
 
 interface Transaction {
@@ -89,62 +87,63 @@ const Income: React.FC = () => {
   useEffect(() => {
     let tempValue = currencyMask(formik.values.value);
     formik.setFieldValue("value", tempValue);
-    console.log(formik.values.value);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik.values.value]);
 
   return (
-    <Container>
-      <Sidebar />
-      <Content>
-        <Box gridArea="area-1"></Box>
+    <ContentWrapper>
+      <IncomeBox gridArea="area-1" />
+      <IncomeBox gridArea="area-2">
+        <h2>Todas Entradas</h2>
 
-        <Box gridArea="area-2">
-          <h2>Todas Entradas</h2>
-
-          <Table columnNumber={3}>
-            {transactions.map((transaction) => (
-              <div key={transaction.id}>
-                <div className="center">
-                  {transaction.type === "income" && <Plus />}
-                </div>
-                <div className="center">
-                  <span title={transaction.name}>{transaction.name}</span>
-                </div>
-                <div className="center">{transaction.value}</div>
+        <Table columnNumber={3}>
+          {transactions.map((transaction) => (
+            <div key={transaction.id}>
+              <div className="center">
+                {transaction.type === "income" && <Plus />}
               </div>
-            ))}
-          </Table>
-        </Box>
+              <div className="center">
+                <span title={transaction.name}>{transaction.name}</span>
+              </div>
+              <div className="center">{transaction.value}</div>
+            </div>
+          ))}
+        </Table>
+      </IncomeBox>
 
-        <Box gridArea="area-3" centered>
-          <h2>Entrada de Dinheiro</h2>
+      <IncomeBox gridArea="area-3" centered>
+        <h2>Entrada de Dinheiro</h2>
 
-          <Form onSubmit={formik.handleSubmit}>
+        <Form onSubmit={formik.handleSubmit}>
+          <InputLabel id="name" labelText="Nome">
             <Input
-              label
-              labelText="Name"
               autoComplete="off"
               id="name"
               name="name"
               value={formik.values.name}
               onChange={formik.handleChange}
             />
-            <Select options={categories} name="category" id="category"></Select>
+          </InputLabel>
+
+          <InputLabel id="category" labelText="Categoria">
+            <Select options={categories} name="category" id="category" />
+          </InputLabel>
+
+          <InputLabel id="value" labelText="Valor">
             <Input
-              label
-              labelText="Valor"
               id="value"
               name="value"
               inputTypeStyle="currency"
               value={formik.values.value}
               onChange={formik.handleChange}
+              autoComplete="off"
             />
+          </InputLabel>
 
-            <ConfirmButton type="submit">Send</ConfirmButton>
-          </Form>
-        </Box>
-      </Content>
-    </Container>
+          <ConfirmButton type="submit">Send</ConfirmButton>
+        </Form>
+      </IncomeBox>
+    </ContentWrapper>
   );
 };
 

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Box } from "../../components/molecules";
 
 type GridAreas = "area-1" | "area-2" | "area-3";
 
@@ -7,18 +8,9 @@ interface IGridAreaProps {
   centered?: boolean;
 }
 
-const Container = styled.div`
-  @media (max-width: 1000px) {
-    grid-template-columns: 1fr;
-  }
-
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-`;
-
-const Content = styled.div`
+export const ContentWrapper = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
 
   padding: 30px 30px;
 
@@ -31,39 +23,23 @@ const Content = styled.div`
   row-gap: 15px;
 `;
 
-const Box = styled.div<IGridAreaProps>`
-  width: 100%;
-  height: 100%;
-  padding: 30px 30px;
-
-  grid-area: ${(props) => props.gridArea || "auto"};
-
-  background-color: var(--white);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
+export const IncomeBox = styled(Box)<IGridAreaProps>`
   display: flex;
   flex-direction: column;
   justify-content: ${(props) => (props.centered ? "center" : "start")};
   align-items: center;
 
   overflow: scroll;
-
-  & > h2 {
-    margin-bottom: 40px;
-  }
+  grid-area: ${(props) => props.gridArea || "auto"};
 `;
 
-const Form = styled.form`
+export const Form = styled.form`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 
   & > div {
-    display: flex;
-    flex-direction: column;
     margin-bottom: 1.5rem;
   }
 `;
-
-export { Container, Content, Box, Form };

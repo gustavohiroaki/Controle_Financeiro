@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logoImg from "../../assets/vectors/logo.svg";
+import logoImg from "../../../assets/vectors/logo.svg";
 
 import { Container, TopSection, Logo, Learn, Section, Sector } from "./styles";
 
@@ -22,6 +22,8 @@ const Sidebar: React.FC = () => {
         <Sector to="/income">Entrada de Dinheiro</Sector>
 
         <Sector to="/outcome">Saída de Dinheiro</Sector>
+
+        <Sector to="/test">Página Teste</Sector>
       </Section>
     </Container>
   );

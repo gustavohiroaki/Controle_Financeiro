@@ -17,7 +17,7 @@ export const CustomInput = styled.input<InputProps>`
   border: 1px solid ${(props) => (props.error ? "red" : "var(--gray)")};
 
   &:focus {
-    border: 1px solid var(--primary);
+    border: 2px solid var(--primary);
   }
 `;
 

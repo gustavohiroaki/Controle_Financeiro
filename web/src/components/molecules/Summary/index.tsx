@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
-import api from "../../service/api";
-import { toCurrency } from "../../utils/format";
+import api from "../../../service/api";
+import { toCurrency } from "../../../utils/format";
 
 import { Container, Greeting, SummaryContent, Content } from "./styles";
 

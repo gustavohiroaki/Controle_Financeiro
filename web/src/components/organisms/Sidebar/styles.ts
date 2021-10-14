@@ -2,11 +2,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const Container = styled.aside`
-  @media (max-width: 1000px) {
-    display: none;
-  }
-  max-width: 440px;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
 
   padding: 30px 0 0 30px;
 

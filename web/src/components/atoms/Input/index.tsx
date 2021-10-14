@@ -12,13 +12,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
 }
 
-const Input: React.FC<InputProps> = ({
-  error,
-  label,
-  labelText,
-  inputTypeStyle,
-  ...rest
-}) => {
+const Input: React.FC<InputProps> = ({ error, inputTypeStyle, ...rest }) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocusWrapper = useCallback(() => {
@@ -26,9 +20,7 @@ const Input: React.FC<InputProps> = ({
   }, [isFocused]);
 
   return (
-    <div>
-      {label && <label htmlFor={rest.id}>{labelText}</label>}
-
+    <>
       {inputTypeStyle === "currency" && (
         <CurrencyInputContainer isFocused={isFocused}>
           <span>R$</span>
@@ -40,7 +32,7 @@ const Input: React.FC<InputProps> = ({
         </CurrencyInputContainer>
       )}
       {!inputTypeStyle && <CustomInput {...rest} />}
-    </div>
+    </>
   );
 };
 
