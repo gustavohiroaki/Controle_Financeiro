@@ -20,17 +20,21 @@ interface Transaction {
 const Dashboard: React.FC = () => {
   const [income, setIncome] = useState<Transaction[]>([]);
   const [outcome, setOutcome] = useState<Transaction[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     api.get("income").then((response) => {
       setIncome(response.data);
     });
-  }, []);
-
-  useEffect(() => {
     api.get("outcome").then((response) => {
       setOutcome(response.data);
     });
+    setLoading(false);
+    return () => {
+      setIncome([]);
+      setOutcome([]);
+    };
   }, []);
 
   const transactions = useMemo(() => {
@@ -66,20 +70,25 @@ const Dashboard: React.FC = () => {
           <DashBox gridArea="area-1" />
           <DashBox gridArea="area-2">
             <h2>Últimas transações</h2>
+
             <Table columnNumber={4}>
-              {transactions.map((transaction) => (
-                <div key={transaction.id}>
-                  <div className="center">
-                    {transaction.type === "income" && <Plus />}
-                    {transaction.type === "outcome" && <Minus />}
+              {loading ? (
+                <p>Carregando...</p>
+              ) : (
+                transactions.map((transaction) => (
+                  <div key={transaction.id}>
+                    <div className="center">
+                      {transaction.type === "income" && <Plus />}
+                      {transaction.type === "outcome" && <Minus />}
+                    </div>
+                    <div className="center">
+                      <span title={transaction.name}>{transaction.name}</span>
+                    </div>
+                    <div className="center">{transaction.value}</div>
+                    <div className="center">{transaction.date}</div>
                   </div>
-                  <div className="center">
-                    <span title={transaction.name}>{transaction.name}</span>
-                  </div>
-                  <div className="center">{transaction.value}</div>
-                  <div className="center">{transaction.date}</div>
-                </div>
-              ))}
+                ))
+              )}
             </Table>
           </DashBox>
           <DashBox gridArea="area-3" />

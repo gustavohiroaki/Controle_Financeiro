@@ -21,7 +21,15 @@ const Summary: React.FC = () => {
     api.get("balance").then((balance) => {
       setBalance(balance.data);
     });
-  }, [balance]);
+
+    return () => {
+      setBalance({
+        incomeTotal: 0,
+        outcomeTotal: 0,
+        remaining: 0,
+      });
+    };
+  }, []);
 
   const incomeTotal = useMemo(
     () => toCurrency(balance?.incomeTotal),
