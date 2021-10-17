@@ -70,6 +70,7 @@ const Sector = styled(Link)`
 
   border: 0;
   border-radius: 15px 0 0 15px;
+  font-size: 0.85rem;
 
   display: flex;
   justify-content: center;

@@ -19,7 +19,7 @@ export const BoxWrapper = styled.div`
   }
 
   width: 100%;
-  height: calc(100vh - 250px);
+  height: 100%;
 
   display: grid;
 

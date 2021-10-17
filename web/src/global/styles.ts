@@ -34,6 +34,20 @@ const GlobalStyles = createGlobalStyle`
         @media(max-width: 720px){
             font-size: 87.5%;
         }
+
+        h1 {
+            font-size: 1.5rem;
+        }
+        h2 {
+            font-size: 1.3rem;
+        }
+        h3 {
+            font-size: 1.2rem;
+        }
+        h4 {
+            font-size: 1.1rem;
+        }
+        
     }
 
     body {

@@ -12,7 +12,7 @@ const Sidebar: React.FC = () => {
         </Link>
 
         <Learn>
-          <h2>Aprenda a Poupar</h2>
+          <h4>Aprenda a Poupar</h4>
         </Learn>
       </TopSection>
 

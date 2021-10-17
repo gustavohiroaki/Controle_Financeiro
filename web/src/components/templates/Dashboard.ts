@@ -12,7 +12,7 @@ export const SidebarZone = styled.div`
   @media (max-width: 1000px) {
     display: none;
   }
-  @media (max-width: 1440px) {
+  @media (max-width: 1280px) {
     width: 25vw;
   }
   width: 20vw;
@@ -24,17 +24,14 @@ export const ContentZone = styled.div`
   width: 100%;
   height: 100vh;
 
-  display: flex;
-
   padding: 15px 30px;
 `;
 
 export const SummaryZone = styled.div`
   width: 100%;
-  height: 20vh;
 `;
 
 export const BoxZone = styled.div`
   width: 100%;
-  height: 80vh;
+  height: calc(80vh - 30px);
 `;
