@@ -6,8 +6,6 @@ type InputType = "currency";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: boolean;
-  label?: boolean;
-  labelText?: string;
   inputTypeStyle?: InputType;
   id: string;
 }
