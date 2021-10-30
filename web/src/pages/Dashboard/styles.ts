@@ -16,6 +16,7 @@ export const ContentWrapper = styled.div`
 export const BoxWrapper = styled.div`
   @media (max-width: 768px) {
     grid-template-areas: "area-1" "area-2" "area-3";
+    grid-template-columns: 1fr;
   }
 
   width: 100%;

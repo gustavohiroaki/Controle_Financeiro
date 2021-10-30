@@ -1,14 +1,25 @@
 import React from "react";
-import { Sidebar } from "../organisms";
-import { Container, ContentZone, SidebarZone } from "../templates/Dashboard";
+import { Sidebar, Topbar } from "../organisms";
+import {
+  Container,
+  ContentZone,
+  SidebarZone,
+  TopbarZone,
+  Main,
+} from "../templates/Dashboard";
 
 const DashboardStructure: React.FC = ({ children }) => {
   return (
     <Container>
-      <SidebarZone>
-        <Sidebar />
-      </SidebarZone>
-      <ContentZone>{children}</ContentZone>
+      <TopbarZone>
+        <Topbar />
+      </TopbarZone>
+      <Main>
+        <SidebarZone>
+          <Sidebar />
+        </SidebarZone>
+        <ContentZone>{children}</ContentZone>
+      </Main>
     </Container>
   );
 };

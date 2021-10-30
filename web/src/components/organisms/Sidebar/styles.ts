@@ -15,18 +15,13 @@ const Container = styled.aside`
 
 const TopSection = styled.section`
   width: 100%;
-  height: 20vh;
+  height: 10vh;
 
   margin-bottom: 30px;
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-`;
-
-const Logo = styled.img`
-  width: 8rem;
-  margin-bottom: 20px;
 `;
 
 const Learn = styled.button`
@@ -85,4 +80,4 @@ const Sector = styled(Link)`
   }
 `;
 
-export { Container, TopSection, Logo, Section, Sector, Learn };
+export { Container, TopSection, Section, Sector, Learn };

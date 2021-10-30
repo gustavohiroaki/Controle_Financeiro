@@ -1,7 +1,8 @@
 import React from "react";
+import { ContentWrapper } from "./styles";
 
 const Teste: React.FC = () => {
-  return <h1>Hello World</h1>;
+  return <ContentWrapper>Hello World</ContentWrapper>;
 };
 
 export default Teste;

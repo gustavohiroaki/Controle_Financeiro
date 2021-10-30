@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100%;
-  padding: 20px 30px;
+  padding: 10px 25px 0 25px;
 
   background-color: var(--primary);
   color: var(--font);
@@ -26,7 +26,6 @@ export const Greeting = styled.div`
 
 export const SummaryContent = styled.div`
   width: 100%;
-  height: 60px;
 
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;

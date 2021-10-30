@@ -5,6 +5,7 @@ const GlobalStyles = createGlobalStyle`
         --white: #ffffff;
         --background: #F7F7F7;
         --transparentBackground: rgba(196,196,196,0.3);
+        --darkPrimary: #0B4498;
         --primary: #1268EA;
         --lightPrimary: #9FC6FF;
         --textTitle: #444444;
@@ -21,9 +22,12 @@ const GlobalStyles = createGlobalStyle`
     }
 
     body {
-        width: 100vw;
-        height: 100vh;
         position: relative;
+    }
+
+    #root {
+        width: 320px;
+        height: 627px;
     }
 
     html {
