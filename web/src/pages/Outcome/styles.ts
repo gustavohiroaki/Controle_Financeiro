@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Box } from "../../components/molecules";
 
 type GridAreas = "area-1" | "area-2" | "area-3";
@@ -6,9 +6,15 @@ type GridAreas = "area-1" | "area-2" | "area-3";
 interface IGridAreaProps {
   gridArea: GridAreas;
   centered?: boolean;
+  main?: boolean;
 }
 
 export const ContentWrapper = styled.div`
+  @media (max-width: 768px) {
+    grid-template-areas: "area-3";
+    padding: 0;
+  }
+
   width: 100%;
   height: 100%;
 
@@ -24,6 +30,19 @@ export const ContentWrapper = styled.div`
 `;
 
 export const OutcomeBox = styled(Box)<IGridAreaProps>`
+  @media (max-width: 768px) {
+    justify-content: start;
+    align-items: unset;
+    ${(props) =>
+      props.main
+        ? css`
+            height: 80vh;
+          `
+        : css`
+            display: none;
+          `}
+  }
+
   display: flex;
   flex-direction: column;
   justify-content: ${(props) => (props.centered ? "center" : "start")};

@@ -2,6 +2,10 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
     :root {
+        @media (max-width: 425px) {
+            --topBarHeight: 50px;
+        }
+
         --white: #ffffff;
         --background: #F7F7F7;
         --transparentBackground: rgba(196,196,196,0.3);
@@ -13,6 +17,9 @@ const GlobalStyles = createGlobalStyle`
         --gray: #D3D3D3;
         --red: #F03327;
         --lightRed: #FFB0B0;
+
+        --topBarHeight: 65px;
+        --contentHeight: calc(100vh - var(--topBarHeight));
     }
 
     * {

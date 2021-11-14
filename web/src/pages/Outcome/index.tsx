@@ -79,7 +79,7 @@ const Outcome: React.FC = () => {
         })
         .then(({ data }) => {
           setOutcome([...outcome, data]);
-          alert(`Ganho inserido com sucesso! ${data.name}`);
+          alert(`Gasto inserido com sucesso! ${data.name}`);
         });
     },
   });
@@ -94,7 +94,7 @@ const Outcome: React.FC = () => {
     <ContentWrapper>
       <OutcomeBox gridArea="area-1" />
       <OutcomeBox gridArea="area-2">
-        <h2>Todas Entradas</h2>
+        <h2>Todas Saídas</h2>
 
         <Table columnNumber={3}>
           {transactions.map((transaction) => (
@@ -111,7 +111,7 @@ const Outcome: React.FC = () => {
         </Table>
       </OutcomeBox>
 
-      <OutcomeBox gridArea="area-3" centered>
+      <OutcomeBox gridArea="area-3" centered main>
         <h2>Saída de Dinheiro</h2>
 
         <Form onSubmit={formik.handleSubmit}>

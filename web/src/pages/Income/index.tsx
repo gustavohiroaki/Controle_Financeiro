@@ -111,7 +111,7 @@ const Income: React.FC = () => {
         </Table>
       </IncomeBox>
 
-      <IncomeBox gridArea="area-3" centered>
+      <IncomeBox gridArea="area-3" centered main>
         <h2>Entrada de Dinheiro</h2>
 
         <Form onSubmit={formik.handleSubmit}>

@@ -1,5 +1,7 @@
 import { ConfirmButton } from "./Buttons";
 import { Minus, Plus } from "./Icons";
+import { Sector } from "./Sidebar";
+import Overlay from "./Overlay";
 import Input from "./Input";
 import Select from "./Select";
 
@@ -12,4 +14,8 @@ const Icons = {
   Plus,
 };
 
-export { Input, Select, Buttons, Icons };
+const Sidebar = {
+  Sector,
+};
+
+export { Input, Select, Buttons, Icons, Sidebar, Overlay };

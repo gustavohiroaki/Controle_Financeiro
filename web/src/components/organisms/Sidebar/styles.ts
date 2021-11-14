@@ -1,11 +1,8 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
-const Container = styled.aside`
+export const Container = styled.aside`
   width: 100%;
   height: 100%;
-
-  padding: 30px 0 0 30px;
 
   background-color: var(--primary);
 
@@ -13,35 +10,32 @@ const Container = styled.aside`
   flex-direction: column;
 `;
 
-const TopSection = styled.section`
+export const TopSection = styled.section`
   width: 100%;
-  height: 10vh;
+  height: 30vh;
 
   margin-bottom: 30px;
+  border-bottom: 1px solid var(--lightPrimary);
 
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
 `;
 
-const Learn = styled.button`
-  width: 100%;
-  height: 4rem;
+export const Avatar = styled.img`
+  transition: all 0.5s;
+  width: 120px;
+  height: 120px;
 
   border: 0;
-  border-radius: 15px 0 0 15px;
-
-  background-color: var(--font);
-  color: var(--textTitle);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 50%;
 `;
 
-const Section = styled.div`
+export const Section = styled.div`
   width: 100%;
   height: 100%;
+  padding-left: 30px;
 
   overflow: scroll;
 
@@ -58,26 +52,3 @@ const Section = styled.div`
 
   color: var(--font);
 `;
-
-const Sector = styled(Link)`
-  width: 100%;
-  height: 3rem;
-
-  border: 0;
-  border-radius: 15px 0 0 15px;
-  font-size: 0.85rem;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  background-color: var(--transparentBackground);
-
-  color: var(--font);
-
-  & + & {
-    margin-top: 10px;
-  }
-`;
-
-export { Container, TopSection, Section, Sector, Learn };

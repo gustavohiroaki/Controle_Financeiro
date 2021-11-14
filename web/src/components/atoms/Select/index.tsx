@@ -9,7 +9,7 @@ const customStyles = {
   }),
   control: (provided: CSSProperties, state: ControlProps) => ({
     ...provided,
-    width: 300,
+    width: "100%",
     height: 50,
     borderRadius: 15,
     borderColor: state.isFocused ? "#1268EA" : "#D3D3D3",

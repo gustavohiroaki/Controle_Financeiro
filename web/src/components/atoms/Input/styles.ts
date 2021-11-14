@@ -9,7 +9,7 @@ interface WrapperProps extends InputProps {
 }
 
 export const CustomInput = styled.input<InputProps>`
-  width: 300px;
+  width: 100%;
   height: 50px;
   padding: 10px 20px;
   border-radius: 15px;
@@ -22,7 +22,7 @@ export const CustomInput = styled.input<InputProps>`
 `;
 
 export const CurrencyInputContainer = styled.div<WrapperProps>`
-  width: 300px;
+  width: 100%;
   height: 50px;
   border-radius: 15px;
 
@@ -31,7 +31,7 @@ export const CurrencyInputContainer = styled.div<WrapperProps>`
   justify-content: center;
   align-items: center;
   transition: border 0.15s;
-  border: 1px solid
+  border: 2px solid
     ${(props) =>
       (props.error && "red") ||
       (props.isFocused && "var(--primary)") ||
@@ -46,6 +46,7 @@ export const CurrencyInputContainer = styled.div<WrapperProps>`
     justify-content: center;
     align-items: center;
     width: 20%;
+    max-width: 50px;
     height: 100%;
     border-radius: 15px 0 0 15px;
     color: ${(props) =>
@@ -55,7 +56,7 @@ export const CurrencyInputContainer = styled.div<WrapperProps>`
   }
 `;
 export const CurrencyInput = styled.input`
-  width: 80%;
+  width: 100%;
   height: 40px;
   margin-left: 15px;
   border-radius: 0px 15px 15px 0px;

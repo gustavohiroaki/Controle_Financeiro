@@ -1,22 +1,32 @@
-import { Container, TopSection, Learn, Section, Sector } from "./styles";
+import {
+  MdRemoveCircleOutline,
+  MdAddCircleOutline,
+  MdBlock,
+} from "react-icons/md";
+import { Sector } from "../../atoms/Sidebar";
+import { Container, TopSection, Avatar, Section } from "./styles";
 
 const Sidebar: React.FC = () => {
   return (
     <Container>
       <TopSection>
-        <Learn>
-          <h4>Aprenda a Poupar</h4>
-        </Learn>
+        <Avatar src="https://picsum.photos/200" />
       </TopSection>
 
       <Section>
-        <h3>Controle</h3>
+        <Sector
+          icon={MdAddCircleOutline}
+          text="Entrada de Dinheiro"
+          to="/income"
+        />
 
-        <Sector to="/income">Entrada de Dinheiro</Sector>
+        <Sector
+          icon={MdRemoveCircleOutline}
+          text="Saída de Dinheiro"
+          to="/outcome"
+        />
 
-        <Sector to="/outcome">Saída de Dinheiro</Sector>
-
-        <Sector to="/test">Página Teste</Sector>
+        <Sector icon={MdBlock} text="Página de Teste" to="/test" />
       </Section>
     </Container>
   );
