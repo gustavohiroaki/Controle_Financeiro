@@ -1,6 +1,5 @@
 import React from "react";
 import { LinkProps } from "react-router-dom";
-import { useToggle } from "../../../../context/ToggleSidebar";
 
 import { Container } from "./styles";
 
@@ -10,10 +9,8 @@ interface SectorProps extends LinkProps {
 }
 
 const Sector: React.FC<SectorProps> = ({ icon: Icon, text, ...rest }) => {
-  const { isOpened } = useToggle();
-
   return (
-    <Container className="sector" {...rest} isOpened={isOpened}>
+    <Container className="sector" {...rest}>
       <div>
         <Icon />
       </div>

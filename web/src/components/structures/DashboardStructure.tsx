@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useToggle } from "../../context/ToggleSidebar";
 import { Overlay } from "../atoms";
 import { Sidebar, Topbar } from "../organisms";
@@ -13,10 +13,6 @@ import {
 const DashboardStructure: React.FC = ({ children }) => {
   const { isOpened, toggleSidebar } = useToggle();
 
-  useEffect(() => {
-    console.log({ isOpened });
-  }, [isOpened]);
-
   return (
     <Container>
       <TopbarZone>
@@ -26,13 +22,7 @@ const DashboardStructure: React.FC = ({ children }) => {
         <SidebarZone isOpened={isOpened}>
           <Sidebar />
         </SidebarZone>
-        {isOpened && (
-          <Overlay
-            onClick={() => {
-              toggleSidebar();
-            }}
-          />
-        )}
+        {isOpened && <Overlay fnCall={toggleSidebar} />}
         <ContentZone>{children}</ContentZone>
       </Main>
     </Container>

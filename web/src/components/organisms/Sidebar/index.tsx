@@ -2,6 +2,7 @@ import {
   MdRemoveCircleOutline,
   MdAddCircleOutline,
   MdBlock,
+  MdNoEncryption,
 } from "react-icons/md";
 import { Sector } from "../../atoms/Sidebar";
 import { Container, TopSection, Avatar, Section } from "./styles";
@@ -27,6 +28,8 @@ const Sidebar: React.FC = () => {
         />
 
         <Sector icon={MdBlock} text="Página de Teste" to="/test" />
+
+        <Sector icon={MdNoEncryption} text="Admin" to="/admin" />
       </Section>
     </Container>
   );

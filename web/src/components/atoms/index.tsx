@@ -1,4 +1,4 @@
-import { ConfirmButton } from "./Buttons";
+import { ConfirmButton, Button } from "./Buttons";
 import { Minus, Plus } from "./Icons";
 import { Sector } from "./Sidebar";
 import Overlay from "./Overlay";
@@ -7,6 +7,7 @@ import Select from "./Select";
 
 const Buttons = {
   ConfirmButton,
+  Button,
 };
 
 const Icons = {
